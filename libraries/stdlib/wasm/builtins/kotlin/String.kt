@@ -22,12 +22,15 @@ public class String private constructor(internal val chars: WasmCharArray) : Com
      * Returns a string obtained by concatenating this string with the string representation of the given [other] object.
      */
     public operator fun plus(other: Any?): String {
+        val thisChars = chars
         val otherChars = if (other is String) other.chars else other.toString().chars
-        val newCharsLen = chars.len() + otherChars.len()
-        val newChars = WasmCharArray(newCharsLen)
-        newChars.fill(newCharsLen) { i ->
-            if (i < chars.len()) chars.get(i) else otherChars.get(i - chars.len())
-        }
+        val thisLen = thisChars.len()
+        val otherLen = otherChars.len()
+        if (otherLen == 0) return String(thisChars)
+
+        val newChars = WasmCharArray(thisLen + otherLen)
+        thisChars.copyTo(newChars, 0, 0, thisLen)
+        otherChars.copyTo(newChars, 0, thisLen, otherLen)
         return String(newChars)
     }
 
@@ -47,12 +50,11 @@ public class String private constructor(internal val chars: WasmCharArray) : Com
 
     public override fun subSequence(startIndex: Int, endIndex: Int): CharSequence {
         val actualStartIndex = startIndex.coerceAtLeast(0)
-        val actualEndIndex = endIndex.coerceAtMost(chars.len())
+        val thisChars = chars
+        val actualEndIndex = endIndex.coerceAtMost(thisChars.len())
         val newCharsLen = actualEndIndex - actualStartIndex
         val newChars = WasmCharArray(newCharsLen)
-        newChars.fill(newCharsLen) { i ->
-            chars.get(actualStartIndex + i)
-        }
+        thisChars.copyTo(newChars, actualStartIndex, 0, newCharsLen)
         return String(newChars)
     }
 

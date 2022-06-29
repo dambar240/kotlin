@@ -5,6 +5,35 @@
 
 package kotlin.collections
 
+import kotlin.wasm.internal.copyTo
+
+internal inline fun arrayCopy(array: ByteArray, fromIndex: Int, destination: ByteArray, toIndex: Int, count: Int) =
+    array.storage.copyTo(destination.storage, toIndex, fromIndex, count)
+
+internal inline fun arrayCopy(array: ShortArray, fromIndex: Int, destination: ShortArray, toIndex: Int, count: Int) =
+    array.storage.copyTo(destination.storage, toIndex, fromIndex, count)
+
+internal inline fun arrayCopy(array: CharArray, fromIndex: Int, destination: CharArray, toIndex: Int, count: Int) =
+    array.storage.copyTo(destination.storage, toIndex, fromIndex, count)
+
+internal inline fun arrayCopy(array: IntArray, fromIndex: Int, destination: IntArray, toIndex: Int, count: Int) =
+    array.storage.copyTo(destination.storage, toIndex, fromIndex, count)
+
+internal inline fun arrayCopy(array: LongArray, fromIndex: Int, destination: LongArray, toIndex: Int, count: Int) =
+    array.storage.copyTo(destination.storage, toIndex, fromIndex, count)
+
+internal inline fun arrayCopy(array: FloatArray, fromIndex: Int, destination: FloatArray, toIndex: Int, count: Int) =
+    array.storage.copyTo(destination.storage, toIndex, fromIndex, count)
+
+internal inline fun arrayCopy(array: DoubleArray, fromIndex: Int, destination: DoubleArray, toIndex: Int, count: Int) =
+    array.storage.copyTo(destination.storage, toIndex, fromIndex, count)
+
+internal inline fun arrayCopy(array: BooleanArray, fromIndex: Int, destination: BooleanArray, toIndex: Int, count: Int) =
+    array.storage.copyTo(destination.storage, toIndex, fromIndex, count)
+
+internal inline fun arrayCopy(array: Array<Any?>, fromIndex: Int, destination: Array<Any?>, toIndex: Int, count: Int) =
+    array.storage.copyTo(destination.storage, toIndex, fromIndex, count)
+
 /**
  * Returns a *typed* array containing all of the elements of this collection.
  *
